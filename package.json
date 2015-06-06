@@ -1,0 +1,30 @@
+{
+  "name": "poet",
+  "version": "0.0.1",
+  "description": "Just another markdown editor.",
+  "devDependencies": {
+    "jsx-loader": "^0.x.x",
+    "babel-loader": "^5.x.x",
+    "bundle-loader": "^0.x.x",
+    "css-loader": "0.x.x",
+    "sass-loader": "^0.x.x",
+    "style-loader": "0.x.x",
+    "webpack": "^1.x.x",
+    "webpack-dev-server": "^1.x.x"
+  },
+  "dependencies": {
+    "react": "0.13.x",
+    "react-style": "0.x.x",
+    "react-draggable": "0.x.x",
+    "alt": "0.16.x"
+  },
+  "author": "renemonroy",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "reactjs",
+    "assets",
+    "webpack",
+    "markdown"
+  ]
+}
