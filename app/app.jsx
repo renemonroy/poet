@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import Editor from './components/editor';
 
 export default class App extends React.Component {
 
@@ -10,6 +11,7 @@ export default class App extends React.Component {
     return(
       <div {...this.props} className="app">
         <p>App</p>
+        <Editor keyName="poet" />
       </div>
     );
   }
