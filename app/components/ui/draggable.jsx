@@ -6,6 +6,7 @@
  */
 
 import React from 'react';
+import lodash from 'lodash';
 import eventsFor from '../helpers/events-for';
 import uxHacks from '../helpers/ux-hacks';
 
@@ -67,6 +68,22 @@ export default class Draggable extends React.Component {
       clientX : pos.clientX,
       clientY : pos.clientY
     };
+  }
+
+  /**
+   * Check if the element can be draggable on X. This is set from the
+   * props.axis of the component.
+   */
+  canDragOnX() {
+    return this.props.axis === 'xy' || this.props.axis === 'x';
+  }
+
+  /**
+   * Check if the element can be draggable on Y.  This is set from the
+   * props.axis of the component.
+   */
+  canDragOnY() {
+    return this.props.axis === 'xy' || this.props.axis === 'y';
   }
 
   /**
@@ -142,8 +159,16 @@ export default class Draggable extends React.Component {
    * dragging, no matter if these come from mouse or touches.
    */
   render() {
-    let ps = this.props;
+    let ps = this.props,
+      st = this.state,
+      childStyle = ps.children.props.style || {},
+      x = this.canDragOnX() ? st.clientX : 0,
+      y = this.canDragOnY() ? st.clientY : 0,
+      transformStyle = { transform : 'translate(' + x + 'px, ' + y + 'px)' },
+      styl = lodash.assign({}, childStyle, transformStyle);
     return React.cloneElement( React.Children.only(ps.children), {
+      className : 'react-draggable',
+      syle : styl,
       onMouseDown : this.onMouseDown,
       onTouchStart : this.onTouchStart,
       onMouseUp : this.onDragEnd,
@@ -158,7 +183,7 @@ export default class Draggable extends React.Component {
  * component. This configuration follows ES6 standard.
  */
 Draggable.defaultProps = {
-  axis : 'both',
+  axis : 'xy',
   bounds : false,
   handle : null,
   cancel : null,
