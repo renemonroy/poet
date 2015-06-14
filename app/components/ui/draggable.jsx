@@ -7,7 +7,7 @@
 
 import React from 'react';
 import lodash from 'lodash';
-import eventsFor from '../helpers/events-for';
+import EventsFor from '../helpers/events-for';
 import uxHacks from '../helpers/ux-hacks';
 
 /**
@@ -15,7 +15,8 @@ import uxHacks from '../helpers/ux-hacks';
  * automatically when a touch is detected. The empty function is Just
  * a placeholder for methods that can be overwritten.
  */
-let dragEventFor = eventsFor['mouse'],
+let eventsFor = EventsFor(),
+  dragEventFor = eventsFor['mouse'],
   emptyFn = () => {};
 
 /**
