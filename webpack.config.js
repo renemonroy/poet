@@ -20,7 +20,7 @@ var fileNames = function(pathDir, paths) {
 
 var getEntry = function(type) {
   var entry = {
-    'vendor' : ['react', 'alt', 'react-ace', 'react-style', 'react-draggable'],
+    'vendor' : ['react', 'alt', 'brace', 'react-style', 'react-draggable'],
     'app' : ['./app/index.jsx']
   };
   console.log(entry);
@@ -53,7 +53,6 @@ module.exports = {
   module : {
     loaders : [
       { test: /\.jsx?$/, loaders: ['babel'], exclude: /node_modules/ },
-      { test: /\.jsx?$/, loaders: ['jsx'], include: /react-ace/ },
       { test: /\.scss$/, loader: 'style!css!sass' }
     ],
     preloaders : [
