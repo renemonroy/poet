@@ -112,7 +112,7 @@ export default class Draggable extends React.Component {
   onDragStart(e) {
     let ps = this.props,
       shouldStart = ps.onStart(e, this.getData()),
-      dragPoint = getPosition(e);
+      dragPoint = this.getPosition(e);
     if ( shouldStart === false ) return;
     if ( ps.enableUserSelect ) uxHacks.addUserSelectStyles();
     this.setState({
@@ -130,7 +130,7 @@ export default class Draggable extends React.Component {
    */
   onDrag(e) {
     let ps = this.props, st = this.state,
-      dragPoint = getPosition(e),
+      dragPoint = this.getPosition(e),
       clientX = dragPoint.clientX - st.offsetX,
       clientY = dragPoint.clientY - st.offsetY,
       shouldUpdate = ps.onDrag(e, this.getData());
