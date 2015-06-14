@@ -1,6 +1,7 @@
 import React from 'react/addons';
-import UIRow from './components/ui/row.jsx';
+// import UIRow from './components/ui/row.jsx';
 import UIEditor from './components/ui/editor';
+import UIDraggable from './components/ui/draggable.jsx';
 
 require('brace/mode/markdown');
 require('brace/theme/github');
@@ -10,6 +11,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.onEditorChange = this.onEditorChange.bind(this);
+    this.onDraggableStart = this.onDraggableStart.bind(this);
   }
 
   onEditorChange(e) {
@@ -18,21 +20,20 @@ export default class App extends React.Component {
     console.groupEnd();
   }
 
+  onDraggableStart(e, ui) {
+    console.log('Draggable event', e);
+    console.log('Draggable position', ui.position);
+  }
+
   render() {
     return(
       <div {...this.props} className="app">
         <p>App</p>
-        <UIRow resizable="true">
-          <UIEditor
-            id="poet-editor"
-            mode="markdown"
-            theme="github"
-            onEdit={this.onEditorChange}
-          />
-          <div id="poet-previewer">
-            <p>Here goes the preview!</p>
+        <UIDraggable axis="x" onStart={this.onDraggableStart}>
+          <div style={{ height : '100px' }}>
+            <p>Draggable</p>
           </div>
-        </UIRow>
+        </UIDraggable>
       </div>
     );
   }
