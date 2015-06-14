@@ -35,7 +35,11 @@ export default class Editor extends React.Component {
     let ps = this.props,
       stylDim = { width : ps.width, height : ps.height };
     return (
-      <div id={ps.id} styles={stylDim}></div>
+      <div
+        id={ps.id}
+        className="ui-editor"
+        styles={stylDim}>
+      </div>
     );
   }
 
