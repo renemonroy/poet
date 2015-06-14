@@ -1,33 +1,59 @@
-require('brace/mode/markdown');
-require('brace/theme/github');
-
-import React from 'react/addons';
-import AceEditor from 'react-ace';
+import React from 'react';
+import Brace from 'brace';
 
 export default class Editor extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onChange = this.onChange.bind(this);
+    this.onEdit = this.onEdit.bind(this);
   }
 
-  onChange(e) {
-    console.log('>>> Event change:', e);
+  componentDidMount() {
+    let ps = this.props,
+      editor = ace.edit(ps.id);
+    editor.getSession().setMode('ace/mode/' + ps.mode);
+    editor.setTheme('ace/theme/' + ps.theme);
+    editor.setFontSize(ps.fontSize);
+    editor.on('change', this.onEdit);
+    editor.setValue(ps.value);
+    editor.renderer.setShowGutter(ps.showGutter);
+    editor.setOption('maxLines', ps.maxLines);
+    editor.setOption('readOnly', ps.readOnly);
+    editor.setOption('highlightActiveLine', ps.highlightActiveLine);
+    editor.setOption('wrap', ps.wrap);
+    editor.setShowPrintMargin(ps.setShowPrintMargin);
+    if (ps.onLoad) ps.onLoad(editor);
+    this.editor = editor;
+  }
+
+  onEdit() {
+    var ps = this.props, val = this.editor.getValue();
+    if ( ps.onEdit ) ps.onEdit(val);
   }
 
   render() {
-    let { keyName } = this.props;
+    let ps = this.props,
+      stylDim = { width : ps.width, height : ps.height };
     return (
-      <div {...this.props}>
-      <AceEditor
-        mode="markdown"
-        theme="github"
-        onChange={this.onChange}
-        width="100%"
-        name={keyName}
-      />
-      </div>
+      <div id={ps.id} styles={stylDim}></div>
     );
   }
 
 }
+
+Editor.defaultProps = {
+  id : 'editor',
+  mode : '',
+  theme : '',
+  height : '500px',
+  width : '500px',
+  value : '',
+  fontSize : 12,
+  showGutter : true,
+  onEdit : null,
+  onLoad : null,
+  readOnly : false,
+  highlightActiveLine : true,
+  showPrintMargin : true,
+  wrap : true
+};
