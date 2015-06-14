@@ -51,7 +51,7 @@ export default class Draggable extends React.Component {
   getData() {
     let st = this._pendingState || this.state;
     return {
-      element : this.getDOMNode(),
+      element : React.findDOMNode(this),
       position : {
         top : st.clientY,
         left : st.clientX
