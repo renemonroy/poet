@@ -168,7 +168,7 @@ export default class Draggable extends React.Component {
       styl = lodash.assign({}, childStyle, transformStyle);
     return React.cloneElement( React.Children.only(ps.children), {
       className : 'react-draggable',
-      syle : styl,
+      style : styl,
       onMouseDown : this.onMouseDown,
       onTouchStart : this.onTouchStart,
       onMouseUp : this.onDragEnd,
