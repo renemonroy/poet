@@ -17,7 +17,8 @@
     "react-style": "0.x.x",
     "react-draggable": "0.x.x",
     "brace": "0.x.x",
-    "alt": "0.16.x"
+    "alt": "0.16.x",
+    "lodash": "3.9.x"
   },
   "scripts": {
     "start" : "NODE_ENV=development webpack-dev-server --watch --colors --port 8080"
