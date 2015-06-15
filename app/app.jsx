@@ -1,9 +1,16 @@
-import React from 'react/addons';
+import React from 'react';
+import InlineStyles from 'react-style';
 import UIRow from './components/ui/row.jsx';
 import UIEditor from './components/ui/editor';
 
 require('brace/mode/markdown');
 require('brace/theme/github');
+
+const inlineStyles = InlineStyles.create({
+  ISColContainer : {
+    padding : '20px'
+  }
+});
 
 export default class App extends React.Component {
 
@@ -19,19 +26,24 @@ export default class App extends React.Component {
   }
 
   render() {
+    let { ISColContainer } = inlineStyles;
     return(
       <div {...this.props} className="app">
         <p>App</p>
         <UIRow id="row-editor" resizable="true">
-          <UIEditor
-            id="poet-editor"
-            mode="markdown"
-            theme="github"
-            width="100%"
-            onEdit={this.onEditorChange}
-          />
-          <div id="poet-previewer">
-            <p>Here goes the preview!</p>
+          <div style={ISColContainer}>
+            <UIEditor
+              id="poet-editor"
+              mode="markdown"
+              theme="github"
+              width="100%"
+              onEdit={this.onEditorChange}
+            />
+          </div>
+          <div style={ISColContainer}>
+            <div id="poet-previewer">
+              <p>Here goes the preview!</p>
+            </div>
           </div>
         </UIRow>
       </div>
