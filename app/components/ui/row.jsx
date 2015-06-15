@@ -47,14 +47,14 @@ export default class UIRow extends React.Component {
     );
   }
 
-  onResizerDrag(react, ctx, e, ui) {
+  onResizerDrag(Re, ctx, e, ui) {
     let rfs = this.refs,
       lCol = rfs[ctx.lCol],
       rCol = rfs[ctx.rCol],
-      lColWidth = parseInt(react.findDOMNode(lCol).offsetWidth, 10) + e.movementX,
-      rColWidth = parseInt(react.findDOMNode(rCol).offsetWidth, 10) - e.movementX;
-    lCol.setState({ colWidth : lColWidth });
-    rCol.setState({ colWidth : rColWidth });
+      lColWidth = lCol.state.colWidth || parseInt(Re.findDOMNode(lCol).offsetWidth, 10),
+      rColWidth = rCol.state.colWidth || parseInt(Re.findDOMNode(rCol).offsetWidth, 10);
+    lCol.setState({ colWidth : lColWidth + e.movementX });
+    rCol.setState({ colWidth : rColWidth - e.movementX });
   }
 
   renderContent(comps) {
