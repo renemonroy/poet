@@ -4,6 +4,9 @@ import InlineStyles from 'react-style';
 import UIColumn from './column';
 import UIDraggable from './draggable';
 
+/**
+ * Inline Styles used for components inside Row and the Row itself.
+ */
 const inlineStyles = InlineStyles.create({
   ISRow : {
     display : 'flex',
@@ -18,12 +21,20 @@ const inlineStyles = InlineStyles.create({
   }
 });
 
+/**
+ * Main class for UIRow component. This tries to simplify the creation
+ * of UI layouts that depends on columns and rows.
+ */
 export default class UIRow extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
+  /**
+   * Returns a Column component by setting its width once its resizer
+   * gets dragged in x.
+   */
   addColumn(id, width, comp) {
     return (
       <UIColumn key={id} ref={id} colWidth={width}>
@@ -32,6 +43,10 @@ export default class UIRow extends React.Component {
     );
   }
 
+  /**
+   * Returns a Draggable component which will modify the size of its
+   * siblings components, which are columns.
+   */
   addResizer(id, colName, i) {
     let { ISResizer } = inlineStyles,
       leftColId = colName + (i-1),
@@ -47,6 +62,10 @@ export default class UIRow extends React.Component {
     );
   }
 
+  /**
+   * Event executed the does necessary calculations to change the
+   * width of columns involved.
+   */
   onResizerDrag(Re, ctx, e, ui) {
     let rfs = this.refs,
       lCol = rfs[ctx.lCol],
@@ -57,6 +76,10 @@ export default class UIRow extends React.Component {
     rCol.setState({ colWidth : rColWidth - e.movementX });
   }
 
+  /**
+   * This handles the components needed to be rendered inside the
+   * row component.
+   */
   renderContent(comps) {
     let row = this,
       cols = [],
@@ -74,6 +97,10 @@ export default class UIRow extends React.Component {
     return cols;
   }
 
+  /**
+   * Renders the row component and the children wrapped into columns
+   * that can be resized.
+   */
   render() {
     let ps = this.props,
       comps = ps.children,
