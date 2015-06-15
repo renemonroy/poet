@@ -8,7 +8,7 @@
 import React from 'react';
 import lodash from 'lodash';
 import EventsFor from '../helpers/events-for';
-import uxHacks from '../helpers/ux-hacks';
+import UxHacks from '../helpers/ux-hacks';
 
 /**
  * Use mouse naming for mouse events by default. This will be changed
@@ -16,6 +16,7 @@ import uxHacks from '../helpers/ux-hacks';
  * a placeholder for methods that can be overwritten.
  */
 let eventsFor = EventsFor(),
+  uxHacks = UxHacks(),
   dragEventFor = eventsFor['mouse'],
   emptyFn = () => {};
 
@@ -23,7 +24,7 @@ let eventsFor = EventsFor(),
  * Main class for the Draggable component which will render the component
  * added as children which needs to be only 1 component.
  */
-export default class Draggable extends React.Component {
+export default class UIDraggable extends React.Component {
 
   /**
    * Sets up the initial configuration for state. It also attaches the
@@ -183,7 +184,7 @@ export default class Draggable extends React.Component {
  * This object is the default options for properties of the Draggable
  * component. This configuration follows ES6 standard.
  */
-Draggable.defaultProps = {
+UIDraggable.defaultProps = {
   axis : 'xy',
   bounds : false,
   handle : null,
