@@ -1,18 +1,24 @@
-const userSelectStyle = ';user-select: none;-webkit-user-select:none;-moz-user-select:none;' +
-  '-o-user-select:none;-ms-user-select:none;';
+import GetPrefix from './get-prefix.jsx';
 
-let ux = {
+let userSelectStyle = ';user-select: none;',
+  browserPrefix = GetPrefix();
 
-  addUserSelectStyles : function() {
-    let styl = document.body.getAttribute('style') || '';
-    document.body.setAttribute('style', styl + userSelectStyle);
-  },
+if (browserPrefix) {
+  userSelectStyle += '-' + browserPrefix.toLowerCase() + '-user-select: none;';
+}
 
-  removeUserSelectStyles : function() {
-    let styl = document.body.getAttribute('style') || '';
-    document.body.setAttribute('style', styl.replace(userSelectStyle));
+export default function uxHacks() {
+  return {
+
+    addUserSelectStyles : function() {
+      let styl = document.body.getAttribute('style') || '';
+      document.body.setAttribute('style', styl + userSelectStyle);
+    },
+
+    removeUserSelectStyles : function() {
+      let styl = document.body.getAttribute('style') || '';
+      document.body.setAttribute('style', styl.replace(userSelectStyle, ''));
+    }
+
   }
-
 };
-
-module.exports = ux;
