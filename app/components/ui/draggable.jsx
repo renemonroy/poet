@@ -166,10 +166,11 @@ export default class UIDraggable extends React.Component {
       childStyle = ps.children.props.style || {},
       x = this.canDragOnX() ? st.clientX : 0,
       y = this.canDragOnY() ? st.clientY : 0,
-      transformStyle = { transform : 'translate(' + x + 'px, ' + y + 'px)' },
+      transformStyle = { left : x + 'px', top : y + 'px' },
+      // transformStyle = { transform : 'translate(' + x + 'px, ' + y + 'px)' },
       styl = lodash.assign({}, childStyle, transformStyle);
     return React.cloneElement( React.Children.only(ps.children), {
-      className : 'react-draggable',
+      className : 'ui-draggable',
       style : styl,
       onMouseDown : this.onMouseDown,
       onTouchStart : this.onTouchStart,
