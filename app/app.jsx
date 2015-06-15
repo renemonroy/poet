@@ -1,5 +1,6 @@
 import React from 'react';
 import InlineStyles from 'react-style';
+import marked from 'marked';
 import UIRow from './components/ui/row.jsx';
 import UIEditor from './components/ui/editor';
 
@@ -12,21 +13,26 @@ const inlineStyles = InlineStyles.create({
   }
 });
 
+marked.setOptions({
+  sanitize : true
+});
+
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = { markdown : '' };
     this.onEditorChange = this.onEditorChange.bind(this);
   }
 
   onEditorChange(e) {
-    console.group('Editor Changes');
-    console.log(e);
-    console.groupEnd();
+    this.setState({ markdown : e });
   }
 
   render() {
-    let { ISColContainer } = inlineStyles;
+    let st = this.state,
+      { ISColContainer } = inlineStyles,
+      previewHtml = { __html : marked(st.markdown) };
     return(
       <div {...this.props} className="app">
         <p>App</p>
@@ -41,9 +47,10 @@ export default class App extends React.Component {
             />
           </div>
           <div style={ISColContainer}>
-            <div id="poet-previewer">
-              <p>Here goes the preview!</p>
-            </div>
+            <div
+              id="poet-previewer"
+              dangerouslySetInnerHTML={previewHtml}
+            />
           </div>
         </UIRow>
       </div>
