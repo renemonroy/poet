@@ -1,65 +1,85 @@
 import React from 'react';
-import UIDragHandler from './drag-handler';
+import lodash from 'lodash';
+import InlineStyles from 'react-style';
+import UIDraggable from './draggable';
 
-export default class Row extends React.Component {
+const inlineStyles = InlineStyles.create({
+  ISRow : {
+    display : 'flex',
+    flexDirection : 'row'
+  },
+  ISColumn : {
+    flex : 1
+  },
+  ISResizer : {
+    flex : '0 1 5px',
+    cursor : 'col-resize',
+    borderLeft : '1px solid #d1d1d1',
+    borderRight : '1px solid #d1d1d1',
+    backgroundColor : 'red'
+  }
+});
+
+export default class UIRow extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onResizerDrag = this.onResizerDrag.bind(this);
   }
-  
-  renderColumns(comps) {
+
+  onResizerDrag(e, ui) {
+    console.log('Splitter Event:', ui.position);
+  }
+
+  addColumn(id, width, comp) {
+    let { ISColumn } = inlineStyles,
+      flexStyle = width ? { flex : '0 1 ' + width + 'px' } : width,
+      styl = lodash.assign({}, ISColumn, flexStyle);
+    return (
+      <div key={id} ref={id} style={styl}>
+        { comp }
+      </div>
+    );
+  }
+
+  addResizer(id) {
+    let { ISResizer } = inlineStyles;
+    return (
+      <UIDraggable key={id} axis="x" onDrag={this.onResizerDrag}>
+        <div style={ISResizer}></div>
+      </UIDraggable>
+    );
+  }
+
+  renderContent(comps) {
     let row = this,
       cols = [],
-      rowId = row.props.id + '-';
-    comps.forEach((comp, i) => {
-      let colId = rowId + 'col-' + i,
-        cachedWidth = localStorage.getItem(colId),
-        colWidth = (cachedWidth !== null) ?
-          parseInt(cachedWidth, 10) : (comp.props.colWidth || null);
+      colName = row.props.id + '-col-';
+    lodash.forEach(comps, (comp, i) => {
+      let { ISResizer } = inlineStyles,
+        colId = colName + i,
+        resizerId = colId + '-handler',
+        colWidth = comp.props.colWidth || null;
       if ( (i > 0) && row.props.resizable === 'true' ) {
-        cols.push(
-          <UIDraggable>
-            <div class="ui-splitter"></div>
-          </UIDraggable>
-        );
+        cols.push(row.addResizer(resizerId));
       }
+      cols.push(row.addColumn(colId, colWidth, comp));
     });
+    return cols;
   }
 
   render() {
     let ps = this.props,
-      comps = ps.children;
+      comps = ps.children,
+      { ISRow } = inlineStyles;
     return (
-      <div {...ps} className="ui-row">
-        { comps.length > 0 ? this.renderColumns(comps) : null }
+      <div {...ps} className="ui-row" style={ISRow}>
+        { comps.length > 0 ? this.renderContent(comps) : null }
       </div>
     );
   }
 
 };
-
-//   renderColumns(comps) {
-//     var row = this, cols = [],
-//       rowName = row.props.rowName ? row.props.rowName + '-' : '';
-//     comps.forEach( (comp, i) => {
-//       var colName = rowName + 'col-' + i,
-//         cachedWidth = localStorage.getItem(colName),
-//         colWidth = (cachedWidth !== null) ? parseInt(cachedWidth, 10) : (comp.props.colWidth || null);
-//       if ( (i > 0) && row.props.resizable === 'true' ) {
-//         cols.push(
-//           <Draggable key={ colName + 'handler-' + i } axis='x' zIndex={1} start={{ x : 0, y: 0 }} onDrag={row._onHandlerDrag.bind(row, i)}>
-//             <div><div className="handler-icon"></div></div>
-//           </Draggable>
-//         );
-//       }
-//       cols.push(
-//         <Column key={ colName } ref={ colName } colWidth={ colWidth } >
-//           { comp }
-//         </Column>
-//       );
-//     });
-//     return cols;
-//   },
 
 // require('./row.scss');
 //
