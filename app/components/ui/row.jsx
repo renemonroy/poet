@@ -27,10 +27,6 @@ const inlineStyles = InlineStyles.create({
  */
 export default class UIRow extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   /**
    * Returns a Column component by setting its width once its resizer
    * gets dragged in x.
