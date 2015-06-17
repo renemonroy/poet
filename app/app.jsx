@@ -1,23 +1,12 @@
 import React from 'react';
 import InlineStyles from 'react-style';
-import marked from 'marked';
-import hljs from 'highlight.js';
 import UIRow from './components/ui/row.jsx';
 import UIEditor from './components/ui/editor';
-
-require('brace/mode/markdown');
-require('brace/theme/github');
+import UIArticle from './components/ui/article';
 
 const inlineStyles = InlineStyles.create({
   ISColContainer : {
     padding : '20px'
-  }
-});
-
-marked.setOptions({
-  sanitize : true,
-  highlight : function(code) {
-    return hljs.highlightAuto(code).value;
   }
 });
 
@@ -35,8 +24,7 @@ export default class App extends React.Component {
 
   render() {
     let st = this.state,
-      { ISColContainer } = inlineStyles,
-      previewHtml = { __html : marked(st.markdown) };
+      { ISColContainer } = inlineStyles;
     return(
       <div {...this.props} className="app">
         <p>App</p>
@@ -51,9 +39,9 @@ export default class App extends React.Component {
             />
           </div>
           <div style={ISColContainer}>
-            <div
+            <UIArticle
               id="poet-previewer"
-              dangerouslySetInnerHTML={previewHtml}
+              content={st.markdown}
             />
           </div>
         </UIRow>
