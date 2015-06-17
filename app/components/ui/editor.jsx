@@ -1,6 +1,9 @@
 import React from 'react';
 import Brace from 'brace';
 
+require('brace/mode/markdown');
+require('brace/theme/github');
+
 export default class Editor extends React.Component {
 
   constructor(props) {
