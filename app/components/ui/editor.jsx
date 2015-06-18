@@ -4,6 +4,8 @@ import Brace from 'brace';
 require('brace/mode/markdown');
 require('brace/theme/github');
 
+require('./editor.scss');
+
 export default class Editor extends React.Component {
 
   constructor(props) {
@@ -16,14 +18,20 @@ export default class Editor extends React.Component {
       editor = ace.edit(ps.id);
     editor.getSession().setMode('ace/mode/' + ps.mode);
     editor.setTheme('ace/theme/' + ps.theme);
-    editor.setFontSize(ps.fontSize);
+    // editor.setFontSize(ps.fontSize);
     editor.on('change', this.onEdit);
     editor.setValue(ps.value);
     editor.renderer.setShowGutter(ps.showGutter);
-    editor.setOption('maxLines', ps.maxLines);
-    editor.setOption('readOnly', ps.readOnly);
-    editor.setOption('highlightActiveLine', ps.highlightActiveLine);
-    editor.setOption('wrap', ps.wrap);
+    editor.setOptions({
+      maxLines : ps.maxLines,
+      readOnly : ps.readOnly,
+      highlightActiveLine : ps.highlightActiveLine,
+      highlightSelectedWord : ps.highlightSelectedWord,
+      wrap : ps.wrap,
+      tabSize : ps.tabSize,
+      fontFamily : ps.fontFamily,
+      fontSize : ps.fontSize
+    });
     editor.setShowPrintMargin(ps.setShowPrintMargin);
     if (ps.onLoad) ps.onLoad(editor);
     this.editor = editor;
@@ -55,12 +63,15 @@ Editor.defaultProps = {
   height : '500px',
   width : '500px',
   value : '',
-  fontSize : 12,
+  fontSize : 14,
   showGutter : true,
   onEdit : null,
   onLoad : null,
   readOnly : false,
   highlightActiveLine : true,
+  highlightSelectedWord : false,
   showPrintMargin : true,
-  wrap : true
+  wrap : true,
+  tabSize : 2,
+  fontFamily : "'Source Code Pro', typewriter, monospace"
 };
