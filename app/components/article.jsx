@@ -12,28 +12,18 @@ export default class Article extends Component {
   constructor(props) {
     super(props);
     this.state = getArticleState();
-    this.onBlur = this.onBlur.bind(this);
     this.onArticleStoreChange = this.onArticleStoreChange.bind(this);
   }
 
   componentWillMount() {
     ArticleStore.listen(this.onArticleStoreChange);
   }
-
   componentWillUnmount() {
     ArticleStore.unlisten(this.onArticleStoreChange);
   }
 
-  componentDidMount() {
-    ArticleActions.loadArticle();
-  }
-
   onArticleStoreChange() {
     this.setState(getArticleState());
-  }
-
-  onBlur(e) {
-    ArticleActions.saveArticle(e.target.innerText);
   }
 
   render() {
@@ -43,6 +33,7 @@ export default class Article extends Component {
       <article
         contentEditable={editable}
         dangerouslySetInnerHTML={{ __html : content}}
+        onFocus={this.onFocus}
         onBlur={this.onBlur}
       />
     );
