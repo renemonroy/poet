@@ -24,18 +24,21 @@ export default class App extends Component {
 
   componentDidMount() {
     this.combokeys.bind('option+e', this.onEdit);
-    this.combokeys.bind('option+s', this.onSave);
-    this.combokeys.bind('option+d', this.onDone);
+    this.combokeys.bind('command+s', this.onSave);
+    this.combokeys.bind('command+d', this.onDone);
     articleActions.load(str);
   }
 
   onEdit() {
     articleActions.edit();
   }
-  onSave() {
+  onSave(e) {
+    console.log('eeeeee');
+    e.preventDefault();
     articleActions.save(React.findDOMNode(this.refs.article).innerText);
   }
   onDone() {
+    e.preventDefault();
     articleActions.done(React.findDOMNode(this.refs.article).innerText);
   }
 
