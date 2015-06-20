@@ -20,7 +20,8 @@
     "alt": "0.16.x",
     "lodash": "3.9.x",
     "marked": "0.3.x",
-    "highlight.js": "8.x.x"
+    "highlight.js": "8.x.x",
+    "combokeys": "2.4.x"
   },
   "scripts": {
     "start" : "NODE_ENV=development webpack-dev-server --watch --colors --port 8080"
