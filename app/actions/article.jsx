@@ -3,10 +3,10 @@ import alt from '../alt';
 class ArticleActions {
   constructor() {
     this.generateActions(
-      'loadArticle',
-      'editArticle',
-      'saveArticleEditing',
-      'closeArticleEditing'
+      'load',
+      'edit',
+      'save',
+      'done'
     );
   }
 }
