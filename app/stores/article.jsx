@@ -8,7 +8,7 @@ marked.setOptions({
   highlight : (code) => hljs.highlightAuto(code).value
 });
 
-const state = { editable : true, markdown : '# Header', html : '' };
+const state = { editable : false, markdown : '', html : '' };
 
 class ArticleStore {
 
@@ -17,20 +17,34 @@ class ArticleStore {
     for ( let key in state ) { this[key] = state[key]; }
   }
 
-  onLoadArticle() {
-    this.setState({ html : marked(this.markdown) });
+  dirtyMd(md) {
+    return md.replace(/\n/ig,'<br>');
   }
 
-  onEditArticle(status) {
-    this.setState({ editable : status });
+  updateFile(md, editable) {
+    let sanitized = md.replace(/<br>/ig,'\n');
+    localStorage.setItem("article", sanitized);
+    this.setState({
+      editable : editable || false,
+      markdown : this.dirtyMd(md),
+      html : marked(md)
+    });
   }
 
-  onSaveArticleEditing(md) {
-    this.setState({ markdown : md, html : marked(md) });
+  onLoad(md) {
+    this.setState({ markdown : this.dirtyMd(md), html : marked(md) });
   }
 
-  onCloseArticleEditing(md) {
-    this.setState({ editable : true,  markdown : md, html : marked(md) });
+  onEdit() {
+    this.setState({ editable : true });
+  }
+
+  onSave(md) {
+    this.updateFile(md, true);
+  }
+
+  onDone(md) {
+    this.updateFile(md, false);
   }
 
 }
