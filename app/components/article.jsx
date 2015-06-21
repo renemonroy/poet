@@ -17,7 +17,7 @@ export default class Article extends React.Component {
     return columns.map( function(column) {
       let content = { __html : column.content || '' };
       return (
-        <div className="column" key={'column' + column.id}>
+        <div className="column" key={'column-' + column.id}>
           <div className="content" dangerouslySetInnerHTML={content} />
         </div>
       );
@@ -28,7 +28,7 @@ export default class Article extends React.Component {
     let article = this;
     return rows.map( function(row) {
       return (
-        <div className="row" key={'row' + row.id}>
+        <div className="row" key={'row-' + row.id}>
           { row.columns ? article.renderColumns(row.columns) : null }
         </div>
       );
