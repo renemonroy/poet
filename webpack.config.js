@@ -20,7 +20,7 @@ var fileNames = function(pathDir, paths) {
 
 var getEntry = function(type) {
   var entry = {
-    'vendor' : ['react', 'lodash', 'alt', 'brace', 'highlight.js', 'react-style', 'react-draggable'],
+    'vendor' : ['react', 'lodash', 'alt', 'medium-editor', 'react-style', 'react-draggable'],
     'app' : ['./app/index.jsx']
   };
   console.log(entry);
